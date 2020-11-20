@@ -1,5 +1,4 @@
 *.out
 *.pdf
 prog1
-.vscode/launch.json
-.vscode/tasks.json
+.vscode/

@@ -83,6 +83,7 @@ bool validGene(int k, string geneA, string geneB)
     }
     else
     {
+        cout << "Not a valid gene length to string length" << endl;
         return false;
     }
     
@@ -201,6 +202,8 @@ bool compGene(int geneASubStart, int geneBSubStart, int k, string geneA, string 
  * Post Conditions: returns the a substring that is sorted 
  *
  * Calls:       none
+ * 
+ * Code modified from geeksforgeeks https://www.geeksforgeeks.org/bubble-sort/
  *                                                                  
  *******************************************************************/
 string sort(int k, string substring)
