@@ -1,3 +1,17 @@
+/******************************************************************* 
+*  \file    prog1.cc
+*  \brief   project 1 longest common substring finder
+*                                                                     
+*  Author:      Jacob Frommeyer
+*  Email:       jf335914@ohio.edu
+*                                                                    
+*  Description: This program finds the longest common substring
+*               between two genes.                  
+*                                                                    
+*  Date:        11/20/20
+*                                                                    
+*******************************************************************/
+
 #include <iostream>
 #include <fstream>
 
@@ -11,9 +25,11 @@ string sort(int k, string substring);
 
 int main(int argc, char **argv)
 {
-    ifstream file;
-    int k;
-    string geneA, geneB, longSubString;
+    ifstream file; //Stores file content
+    int k;  //Length of each gene
+    string geneA;   //Contains all of geneA
+    string geneB;   //Contains all of geneB
+    string longSubString;   //Contains the final longest common substring
     
     //Reads in file as given in command line argument
     file.open(argv[1]);
@@ -23,9 +39,9 @@ int main(int argc, char **argv)
 
     if(validGene(k, geneA, geneB) == true)  //Checks to see if the genes are divisible by k
     {
-        longSubString = lcs(k, geneA, geneB);
+        longSubString = lcs(k, geneA, geneB);   //Stores longest common
 
-        int numGenes = longSubString.length() / k;
+        int numGenes = longSubString.length() / k;  //Finds number of genes in the longest common subsequence
         
         cout << endl << "Number of genes: " << numGenes << endl;    //Prints out the total number of genes in the subsequence
         cout << "Longest common subsequence: " << longSubString << endl;    //Prints out the longest common subsequence
@@ -35,7 +51,6 @@ int main(int argc, char **argv)
         return 1;   //Gives error if genes are not divisible by k
     }
     
-
     return 0;
 }
 
@@ -62,15 +77,12 @@ int main(int argc, char **argv)
  *******************************************************************/
 bool validGene(int k, string geneA, string geneB)
 {
-    //cout << geneA.length() << " " << geneB.length() << endl;
-    if(geneA.length() % k == 0 && geneB.length() % k == 0)
+    if(geneA.length() % k == 0 && geneB.length() % k == 0)  //Checks to see if the length of each gene is divisible by k, determines if the genes are of a valid length
     {
-        //cout << "valid genes" << endl << endl;
         return true;
     }
     else
     {
-        //cout << "gene length does not match k" << endl << endl;
         return false;
     }
     
@@ -101,34 +113,29 @@ bool validGene(int k, string geneA, string geneB)
  *******************************************************************/
 string lcs(int k, string geneA, string geneB)
 {
-    const int lenGeneA = geneA.length();
-    const int lenGeneB = geneB.length();
-    string comSubString;
+    const int lenGeneA = geneA.length();    //Stores the length of geneA
+    const int lenGeneB = geneB.length();    //Stores the length of geneB
+    string comSubString;    //Stores the common substring as its being found
 
-    int itteration = 0;
+    int itteration = 0; //Initializes itteration at 0
 
-    for(int i = 0; i < lenGeneA; i = i + k)
+    for(int i = 0; i < lenGeneA; i = i + k)     //Itterates through the first gene string
     {
-        //cout << "i: " << i << endl;
-        for(int j = itteration; j < lenGeneB; j = j + k)
+        for(int j = itteration; j < lenGeneB; j = j + k)    //Itterates through the second gene string
         {
-            //cout << "j: " << j << endl;
-            if(compGene(i, j, k, geneA, geneB) == true)
+            if(compGene(i, j, k, geneA, geneB) == true)     //Calls compGene to determine if the subsequences between the two genes match
             {
-                //cout << "genes match" << endl;
-                comSubString = comSubString + geneA.substr(i, k); 
-                //cout << "common substring: " << comSubString << endl;
-                itteration = j + k;
-                break;
+                comSubString = comSubString + geneA.substr(i, k); //Adds geneA's subsequence gene to the current running common subsequence
+                itteration = j + k;     //Itterates second gene past last found common subsequence
+                break;  //Itterates through geneA again
             }
             else
             {
-                //cout << "genes dont match" << endl;
-                continue;
+                continue;   //Continues to itterate through geneB
             }
         }
     }
-    return comSubString;
+    return comSubString;    //Returns the longest common subsequence found
 }
 
 /******************************************************************
@@ -160,15 +167,13 @@ string lcs(int k, string geneA, string geneB)
  *******************************************************************/
 bool compGene(int geneASubStart, int geneBSubStart, int k, string geneA, string geneB)
 {
-    string temp1 = geneA.substr(geneASubStart, k);
-    string temp2 = geneB.substr(geneBSubStart, k);
+    string temp1 = geneA.substr(geneASubStart, k);  //Temporary value to hold the current subsequence of geneA
+    string temp2 = geneB.substr(geneBSubStart, k);  //Temporary value to hold the current subsequence of geneB
 
-    temp1 = sort(k, temp1);
-    temp2 = sort(k, temp2);
+    temp1 = sort(k, temp1); //Sorts the geneA temp variable
+    temp2 = sort(k, temp2); //Sorts the geneB temp variable
 
-    //cout << "temp1: " << temp1 << " temp2: " << temp2 << endl;
-
-    if(temp1 == temp2)
+    if(temp1 == temp2)  //Returns true if the temp variables contain the same characters
     {
         return true;
     }
@@ -200,23 +205,23 @@ bool compGene(int geneASubStart, int geneBSubStart, int k, string geneA, string 
  *******************************************************************/
 string sort(int k, string substring)
 {
-    bool swapped;
+    bool swapped;   //modification to optimize bubble sort prevents running past further than neccessary
 
     for(int i = 0; i < k - 1; i++)
     {
-        swapped = false;
+        swapped = false; //Determines if value has been swapped or not
         for(int j = 0; j < k - i - 1; j++)
         {
             if(substring[j] > substring[j+1])
             {
-                swap(substring[j], substring[j+1]);
-                swapped = true;
+                swap(substring[j], substring[j+1]); //Swaps the substring characters
+                swapped = true; //Marks a swap value
             }
         }
         if(swapped == false)
         {
-            break;
+            break;  //Returns to main loop if the variables have been swapped
         }
     }
-    return substring;
+    return substring;   //Returns the sorted substring
 }
