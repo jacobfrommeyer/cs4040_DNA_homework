@@ -1,0 +1,27 @@
+Jacob Frommeyer
+jf335914@ohio.edu
+Prog 1 Analysis
+
+Valid Gene Function Constant time constant space best/worst/average
+My validGene function runs in constant time and space for best, worse, and average
+cases.  It always makes only two comparisons therefore runs in constant time O(2).
+
+My longest common substring function runs at best case O(m) if all genes match between
+both genes because it only loops through once.  The average and worse case is O(m*n)/k
+because the loops jump every kth character.  The space complexity is O(m*n) depending
+on the length of the common substring.
+
+My compGene function runs in O(n) space and time complexities because it only
+checks to see if two strings are identical.  n is dependent on the length of the strings.
+
+sort worst/average O(n*n) best O(n)
+
+My sort function is based off of a modified bubble sort.  It runs in best case O(n) if
+both strings are already sorted, and worst/average case of O(n^2) if the strings are
+reverse sorted.  It is modified to stop wasted processing time after already swapping 
+characters in the string.
+
+I chose to utilize a string that is concatinated for simplicity when printing out the
+final result.  This prevents the use of an array and the need for a for loop and/or a
+print function.  My goal was to make as efficient of a program in as few lines as
+possible with as few for loops as neccessary.
